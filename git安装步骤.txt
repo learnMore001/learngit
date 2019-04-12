@@ -1,0 +1,93 @@
+一、点击下载的.exe文件，按默认选项进行安装
+
+二、开始菜单栏Git->GitBash弹出框，输入以下命令行，设置用户名和密码
+$ git config --global user.name "txz"
+$ git config --global user.email"273074381@qq.com"
+设置完成后在C:\Users\Administrator下的.gitconfig文件查看用户名
+
+三、创建版本库(创建文件夹)
+$ cd 目录名(进入目录文件夹)
+$ mkdir(创建文件夹)
+$ pwd(展示当前文件夹路径)
+四、给版本库添加文档并提交
+$ git init(把这个目录变成Git可以管理的仓库)
+$ git config user.name "txz"(username)
+$ git config user.email "273074381@qq.com"(password)
+$ git add readme.txt(将已经存在在文件夹下的文件添加到版本库)
+$ git commit -m "add readme txt file"(把文件提交到仓库,-m后边的是备注)
+
+五、修改文档并查看状态
+手动修改readme.txt，
+$ git status(查看仓库当前的状态)
+$ git diff(查看不同点)
+
+六、回滚文件至老版本
+单纯git log后，英文输入法下按q退出，恢复到$请求行
+$ git log [--pretty=oneline](展示不同版本的日志信息，从近到远的顺序显示),加参数表示可以将信息展示为：提交ID 备注的形式，如下：
+$ git log --pretty=oneline
+f7d8e115729ad93f4de8e7129e9c6b162a95bcd9 (HEAD -> master) 修改两个文件，获取状态都显示
+8e48f79ba983abf9782ce640d2b2c9e9c691b108 和测试文档一起修改，结果获取状态只显示一个
+c1e8ce0ad7c18900d8f773c78303d23c723317aa 添加测试文档test.txt
+78255d6abca0a22b7addb55f66659290303f099c add two more row at last
+18cfee215f91ca082aa22c4c7db0121b3755be09 add readme txt file
+
+在Git中，用HEAD表示当前版本，上一个版本就是HEAD^，上上一个版本就是HEAD^^，当然往上100个版本写100个^比较容易数不过来，所以写成HEAD~100
+
+$ git reset --hard HEAD^表示回滚到8e48f79ba983abf9782ce640d2b2c9e9c691b108这个版本
+也可以使用commit的id回滚到指定版本，
+$ git reset --hard f7d8e115729ad93f4de8e7129e9c6b162a95bcd9(回滚到指定id的版本，必须是同一cmd窗口打开)
+
+如果将窗口关闭，不知道commit id，用git reflog命令查看根据需求进行回滚
+
+七、Git的组成
+我们创建文件的地方叫工作区，其下包含有一个.git的隐藏文件，表示的是git版本库，git版本库包含暂存区(stage)和分支以及指向分支的指针（默认master分支的指针为HEAD）在工作区添加或修改文件，用git add命令表示将文件加入到暂存区，用git commit命令表示将暂存区的内容提交到当前分支
+
+$ git diff HEAD -- readme.txt(查看指定文件在版本库和工作区的不同)
+
+--撤销修改
+$ git checkout -- file.txt意思就是，把readme.txt文件在工作区的修改全部撤销，这里有两种情况：
+
+一种是readme.txt自修改后还没有被放到暂存区，现在，撤销修改就回到和版本库一模一样的状态；
+
+一种是readme.txt已经添加到暂存区后，又作了修改，现在，撤销修改就回到添加到暂存区后的状态。
+
+总之，就是让这个文件回到最近一次git commit或git add时的状态
+
+对于已经添加到暂存区还未提交到版本库的，可以使用$ git reset HEAD file.txt将暂存区的修改撤销掉，然后用checkout -- file.txt撤销工作区的改变
+
+--删除文件
+
+$ git rm file.txt + git commit --m ""(表示彻底删除文件)
+
+$ git rm file.txt + git checkout -- file.txt(表示工作区误删，恢复到和版本库一致的状态)
+
+
+八、在GitHub上创建远程库并连接
+--创建远程库和本地库的连接
+$ git remote add origin git@github.com:learnMore001/learngit.git(关联远程库和本地库)
+--提交本地库资源到远程库中
+$ git push -u origin master(将本地库内容推送到远程库中，第一次push时使用，后续操作不需要加-u)
+
+--从远程库克隆
+$ git clone git@github.com:learnMore001/learngitSkills-clone.git
+
+九、创建分支并切换分支
+$ git checkout -b dev(创建分支dev并切换至dev分支)
+上一句命令相当于以下两条命令：
+$ git branch dev
+$ git checkout dev
+
+$ git branch(查看分支，会列出所有分支，但在当前分支前边会有*标明)
+
+$ git merge 分支名(用于合并指定分支到当前分支)
+
+$ git branch -d dev(删除分支)
+
+$ git log --graph --pretty=oneline --abbrev-commit(查看包括分支合并的日志信息)
+
+在使用 "cat > filename.txt" 创建文件时，可采用下面步骤:
+
+1、键入cat > filename.txt 后回车 
+2、录入文本内容； 
+3、键入回车； 
+4、在键盘上按下Ctrl+D (或者键入Control－D)。
